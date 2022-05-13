@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee</title>
+</head>
+<body>
+
+<h3>従業員一覧</h3>
+<table　id="employee_list">
+	<tr th:each="obj : ${list}">
+		<td th:text=${obj.id}></td>
+		<td th:text=${obj.code}></td>
+		<td th:text=${obj.name}></td>
+		<td th:text=${obj.password}></td>
+		<td th:text=${obj.admin_flag}></td>
+		<td th:text=${obj.created_at}></td>	
+		<td th:text=${obj.updated_at}></td>
+		<td><a type="button" th:href="@{/employee/{id}(id=${obj.id})}">編集</a></td>
+		<td>
+			<form method="POST" th:action="@{/employee/delete}">
+			<input type="hidden" name="employeeId" th:value="${obj.id}">
+			<input type="submit" value="削除">
+			</form>
+			<!-- 1-4　複製ボタンを作成する -->
+		</td>
+	</tr>
+</table>
+</div>
+
+</body>
+</html>

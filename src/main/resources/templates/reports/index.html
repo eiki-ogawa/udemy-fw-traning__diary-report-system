@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Reports</title>
+</head>
+<body>
+<p th:if="${complete}" th:text="${complete}"></p>
+<form method="POST" th:action="@{/reports/insert}" th:object="${reportsForm}">
+	<label>社員番号：</label>
+	<input type="text" name="employee_id" th:value="*{employee_id}" /><br>
+	<div th:if="${#fields.hasErrors('employee_id')}" th:errors="*{employee_id}"></div>
+	<label>日付：</label>
+	<input type="datetime-local" name="report_date" th:value="*{report_date}" /><br>
+	<div th:if="${#fields.hasErrors('report_date')}" th:errors="*{report_date}"></div>
+	<label>タイトル：</label>
+	<input type="text" name="title" th:value="*{title}" /><br>
+	<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+	<label>内容：</label>
+	<input type="text" name="content" th:value="*{content}" /><br>
+	<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+	<input  th:if="${reportsId}" type="hidden" name="reportsId" th:value="${reportsId}">
+	<input type="submit" value="送信">
+</form>
+
+<h3>日報一覧</h3>
+<table　id="reports_list">
+	<tr th:each="obj : ${list}">
+		<td th:text=${obj.id}></td>
+		<td th:text=${obj.employee_id}></td>
+		<td th:text=${obj.report_date}></td>
+		<td th:text=${obj.title}></td>
+		<td th:text=${obj.content}></td>
+		<td th:text=${obj.created_at}></td>	
+		<td th:text=${obj.updated_at}></td>
+		<td><a type="button" th:href="@{/reports/{id}(id=${obj.id})}">編集</a></td>
+		<td>
+			<form method="POST" th:action="@{/reports/delete}">
+			<input type="hidden" name="reportsId" th:value="${obj.id}">
+			<input type="submit" value="削除">
+			</form>
+		</td>
+	</tr>
+</table>
+</div>
+<br>
+</body>
+</html>
