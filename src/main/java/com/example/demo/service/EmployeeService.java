@@ -9,6 +9,8 @@ public interface EmployeeService {
 	
 	List<Employee> findAll();
 	
+	public String getName(String employee_id);
+	
 	Optional<Employee> getEmployee(int id);
 	
 	void insert(Employee employee);

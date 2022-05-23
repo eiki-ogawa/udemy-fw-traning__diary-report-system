@@ -21,7 +21,7 @@ public class LoginDaoImpl implements LoginDao {
 
 	@Override
 	public List<Login> findAll() {
-		String sql = "SELECT code, password FROM employee";
+		String sql = "SELECT name, code, password, admin_flag FROM employee";
 		
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 		
@@ -30,8 +30,10 @@ public class LoginDaoImpl implements LoginDao {
 		for(Map<String, Object> result : resultList) {
 			
 			Login login = new Login();
+			login.setName((String)result.get("name"));
 			login.setCode((String)result.get("code"));
 			login.setPassword((String)result.get("password"));
+			login.setAdmin_flag((Boolean)result.get("admin_flag"));
 			
 			list.add(login);
 		}
@@ -40,13 +42,15 @@ public class LoginDaoImpl implements LoginDao {
 
 	@Override
 	public Optional<Login> check(String code, String password) {
-		String sql = "SELECT code, password FROM employee WHERE code = ? AND password = ?";
+		String sql = "SELECT name, code, password, admin_flag FROM employee WHERE code = ? AND password = ?";
 		
 		Map<String, Object> result = jdbcTemplate.queryForMap(sql, code, password);
 		
 		Login login = new Login();
+		login.setName((String)result.get("name"));
 		login.setCode((String)result.get("code"));
 		login.setPassword((String)result.get("password"));
+		login.setAdmin_flag((Boolean)result.get("admin_flag"));
 		
 		Optional<Login> loginOpt = Optional.ofNullable(login);
 		

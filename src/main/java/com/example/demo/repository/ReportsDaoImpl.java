@@ -10,14 +10,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Reports;
+import com.example.demo.service.EmployeeService;
 
 @Repository
 public class ReportsDaoImpl implements ReportsDao {
 	
 	private final JdbcTemplate jdbcTemplate;
+	private final EmployeeService employeeService;
 	
-	public ReportsDaoImpl(JdbcTemplate jdbcTemplate) {
+	public ReportsDaoImpl(JdbcTemplate jdbcTemplate,
+			EmployeeService employeeService) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.employeeService = employeeService;
 	}
 
 	@Override
@@ -34,6 +38,7 @@ public class ReportsDaoImpl implements ReportsDao {
 			
 			Reports reports = new Reports();
 			reports.setId((int)result.get("id"));
+			reports.setName((String)employeeService.getName((String)result.get("employee_id")));
 			reports.setEmployee_id((String)result.get("employee_id"));
 			reports.setReport_date(((Timestamp) result.get("report_date")).toLocalDateTime());
 			reports.setTitle((String)result.get("title"));
@@ -48,7 +53,7 @@ public class ReportsDaoImpl implements ReportsDao {
 
 	@Override
 	public Optional<Reports> findById(int id) {
-		String sql = "SELECT id, employee_id, report_date, title, content, created_at, updated_at"
+		String sql = "SELECT id, employee_id, report_date, title, content, created_at, updated_at "
 				+ "FROM reports WHERE id = ?";
 		
 		Map<String, Object> result = jdbcTemplate.queryForMap(sql, id);
@@ -76,8 +81,8 @@ public class ReportsDaoImpl implements ReportsDao {
 
 	@Override
 	public int update(Reports reports) {
-		return jdbcTemplate.update("UPDATE reports SET employee_id = ?, report_date = ?, title = ?, content = ?, created_at = ?, updated_at = ? WHERE id = ?",
-				reports.getEmployee_id(), reports.getReport_date(), reports.getTitle(), reports.getContent(), reports.getCreated_at(), reports.getUpdated_at(), reports.getId() );
+		return jdbcTemplate.update("UPDATE reports SET employee_id = ?, report_date = ?, title = ?, content = ?, updated_at = ? WHERE id = ?",
+				reports.getEmployee_id(), reports.getReport_date(), reports.getTitle(), reports.getContent(), reports.getUpdated_at(), reports.getId() );
 	}
 
 	@Override

@@ -8,31 +8,43 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class EmployeeForm {
 	
-	@NotNull (message = "ç¤¾å“¡ç•ªå·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "Ğˆõ”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	private String code;
 	
-	@NotNull (message = "æ°åã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "–¼‘O‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	private String name;
 	
-	@NotNull (message = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	private String password;
 
+	@NotNull (message = "ŠÇ—ÒŒ ŒÀ‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢")
 	private Boolean admin_flag;
 	
-	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime created_at;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime updated_at;
+	
+	private Boolean delete_flag;
+	
+	private Boolean New;
 		
 	public EmployeeForm(String code,
 			String name,
 			String password,
 			Boolean admin_flag,
-			LocalDateTime updated_at) {
+			LocalDateTime created_at,
+			LocalDateTime updated_at,
+			Boolean delete_flag,
+			Boolean New) {
 		this.code = code;
 		this.name = name;
 		this.password = password;
 		this.admin_flag = admin_flag;
+		this.created_at = created_at;
 		this.updated_at = updated_at;
+		this.delete_flag = delete_flag;
 	}
 	
 	public String getCode() {
@@ -66,13 +78,37 @@ public class EmployeeForm {
 	public void setAdmin_flag(Boolean admin_flag) {
 		this.admin_flag = admin_flag;
 	}
-
+	
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+	
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+	
 	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
 	
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
+	}
+	
+	public Boolean getDelete_flag() {
+		return delete_flag;
+	}
+	
+	public void setDelete_flag(Boolean delete_flag) {
+		this.delete_flag = delete_flag;
+	}
+
+	public Boolean getNew() {
+		return New;
+	}
+
+	public void setNew(Boolean new1) {
+		New = new1;
 	}
 }
 

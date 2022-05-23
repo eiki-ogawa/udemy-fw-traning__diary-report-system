@@ -22,6 +22,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findAll() {
 		return dao.findAll();
 	}
+	
+	@Override
+	public String getName(String employee_id) {
+		return dao.findByCode(employee_id);
+	}
 
 	@Override
 	public Optional<Employee> getEmployee(int id) {
@@ -34,7 +39,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void insert(Employee employee) {
-		dao.insert(employee);
+		try {
+			dao.insert(employee);
+		} catch (Exception e) {
+			throw new UniqueException("同じ社員番号が既に登録されています。");
+		}
 	}
 
 	@Override

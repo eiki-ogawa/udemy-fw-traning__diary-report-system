@@ -8,27 +8,43 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class ReportsForm {
 	
-	@NotNull
 	private String employee_id;
 	
-	@NotNull (message = "æ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "“ú•t‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime report_date;
 	
-	@NotNull (message = "ã‚¿ã‚¤ãƒˆãƒ«ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "ƒ^ƒCƒgƒ‹‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	private String title;
 	
-	@NotNull (message = "å†…å®¹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚")
+	@NotNull (message = "“à—e‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢")
 	private String content;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime created_at;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime updated_at;
+	
+	private Boolean New;
+	
+	private String name;
 
 	public ReportsForm(String employee_id,
 			LocalDateTime report_date,
 			String title,
-			String content) {
+			String content,
+			LocalDateTime created_at,
+			LocalDateTime updated_at,
+			Boolean New,
+			String name) {
 		this.employee_id = employee_id;
 		this.report_date = report_date;
 		this.title = title;
 		this.content = content;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+		this.name = name;
 	}
 	
 	public String getEmployee_id() {
@@ -61,5 +77,37 @@ public class ReportsForm {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public Boolean getNew() {
+		return New;
+	}
+
+	public void setNew(Boolean new1) {
+		New = new1;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

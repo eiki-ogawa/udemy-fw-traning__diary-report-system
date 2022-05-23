@@ -24,7 +24,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<Employee> findAll() {
 		
 		String sql = "SELECT id, code, name, password, admin_flag, created_at, updated_at, delete_flag "
-				+ "FROM employee";
+				+ "FROM employee WHERE delete_flag = false";
 		
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 		
@@ -46,10 +46,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public String findByCode(String employee_id) {
+		String sql = "SELECT name FROM employee WHERE code = ?";
+		
+		Map<String, Object> result = jdbcTemplate.queryForMap(sql, employee_id);
+		
+		String Name = (String)result.get("name");
+		
+		return Name;
+		
+	}
 
 	@Override
 	public Optional<Employee> findById(int id) {
-		String sql = "SELECT id, code, name, password, admin_flag, created_at, updated_at, delete_flag"
+		String sql = "SELECT id, code, name, password, admin_flag, created_at, updated_at, delete_flag "
 				+ "FROM employee WHERE id = ?";
 		
 		Map<String, Object> result = jdbcTemplate.queryForMap(sql, id);
@@ -61,7 +73,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		employee.setPassword((String)result.get("password"));
 		employee.setAdmin_flag((Boolean)result.get("admin_flag"));
 		employee.setCreated_at(((Timestamp) result.get("created_at")).toLocalDateTime());
-		employee.setUpdated_at(((Timestamp) result.get("update_at")).toLocalDateTime());
+		employee.setUpdated_at(((Timestamp) result.get("updated_at")).toLocalDateTime());
 		employee.setDelete_flag((Boolean)result.get("delete_flag"));
 		
 		Optional<Employee> employeeOpt = Optional.ofNullable(employee);
@@ -72,14 +84,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public void insert(Employee employee) {
 		jdbcTemplate.update("INSERT INTO employee(code, name, password, admin_flag, created_at, updated_at, delete_flag) VALUES(?,?,?,?,?,?,?)",
-				employee.getCode(), employee.getName(), employee.getPassword(), employee.getAdmin_flag(), employee.getCreated_at(), employee.getUpdated_at(), employee.getDelete_flag() );
+				employee.getCode(), employee.getName(), employee.getPassword(), employee.getAdmin_flag(), employee.getCreated_at(), employee.getUpdated_at(), 0 );
 
 	}
 
 	@Override
 	public int update(Employee employee) {
-		return jdbcTemplate.update("UPDATE employee SET code = ?, name = ?, password = ?, admin_flag = ?, created_at = ?, updated_at = ?, delete_flag = ? WHERE id = ?",
-				employee.getCode(), employee.getName(), employee.getPassword(), employee.getAdmin_flag(), employee.getCreated_at(), employee.getUpdated_at(), employee.getDelete_flag(), employee.getId() );
+		return jdbcTemplate.update("UPDATE employee SET code = ?, name = ?, password = ?, admin_flag = ?, updated_at = ?, delete_flag = ? WHERE id = ?",
+				employee.getCode(), employee.getName(), employee.getPassword(), employee.getAdmin_flag(), employee.getUpdated_at(), false, employee.getId() );
 	}
 
 	@Override

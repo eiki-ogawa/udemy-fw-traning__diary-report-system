@@ -9,6 +9,8 @@ public interface EmployeeDao {
 	
 	List<Employee> findAll();
 	
+	String findByCode(String employee_id);
+	
 	Optional<Employee> findById(int id);
 	
 	void insert(Employee employee);

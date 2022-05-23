@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import com.example.demo.repository.LoginDao;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-	private final LoginDao dao;
+	@Autowired
+	private LoginDao dao;
 	
 	public LoginServiceImpl(LoginDao dao) {
 		this.dao = dao;
@@ -28,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 		try {
 			return dao.check(code, password);
 		} catch (EmptyResultDataAccessException e) {
-			throw new NotFoundException("IDまたはパスワードが違います。");
+			return Optional.ofNullable(null);
 		}
 	}
 }

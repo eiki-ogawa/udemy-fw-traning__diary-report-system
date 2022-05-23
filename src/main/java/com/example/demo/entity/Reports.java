@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Reports {
 	
 	private int id;
+	private String name;
 	private String employee_id;
 	private LocalDateTime report_date;
 	private String title;
@@ -21,6 +22,14 @@ public class Reports {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmployee_id() {

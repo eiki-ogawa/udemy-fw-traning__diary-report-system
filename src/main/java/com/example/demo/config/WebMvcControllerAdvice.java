@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import com.example.demo.service.NotFoundException;
+import com.example.demo.service.UniqueException;
 
 @ControllerAdvice
 public class WebMvcControllerAdvice {
@@ -19,9 +20,14 @@ public class WebMvcControllerAdvice {
 	}
 	
 	@ExceptionHandler(NotFoundException.class)
-	public String handleException(NotFoundException e,Model model) {
+	public String handleException(NotFoundException e, Model model) {
 		model.addAttribute("message", e);
 		return "error/CustomPage";
+	}
+	@ExceptionHandler(UniqueException.class)
+	public String handleException(UniqueException e, Model model) {
+		model.addAttribute("message", e);
+		return "/error/Unique";
 	}
 
 }
